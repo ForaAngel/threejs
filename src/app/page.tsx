@@ -5,7 +5,7 @@ import { OrbitControls, Stats, useTexture } from "@react-three/drei";
 import Lights from "./metaverse/Lights";
 import Ground from "./metaverse/Ground";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
-import { ArbolModel } from "./metaverse/Arbol";
+import Arboles from "./metaverse/Arbol";
 
 const Avatar = () => {
   const model = useLoader(GLTFLoader, "./models/avatarmet.glb");
@@ -26,7 +26,7 @@ export default function Page() {
         <gridHelper args={[10, 10]} />
         <OrbitControls />
         {/* <TexturedShapes /> */}
-        <ArbolModel />
+        <Arboles boundary={50} count={20} />
         {/* <Avatar /> */}
         <Lights />
         <Ground />
