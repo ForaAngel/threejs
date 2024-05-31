@@ -1,38 +1,35 @@
 "use client";
 import React from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stats } from "@react-three/drei";
-import AnimatedBox from "./metaverse/AnimatedBox";
+import { Canvas, useLoader } from "@react-three/fiber";
+import { OrbitControls, Stats, useTexture } from "@react-three/drei";
+import Lights from "./metaverse/Lights";
+import Ground from "./metaverse/Ground";
+import { GLTFLoader } from "three/examples/jsm/Addons.js";
+import { ArbolModel } from "./metaverse/Arbol";
 
-const TexturedShapes = () => {
-  return (
-    <>
-      <mesh scale={[0.5, 0.5, 0.5]} position={[-1, 0, 0]}>
-        <sphereGeometry />
-        <meshStandardMaterial />
-      </mesh>
-      <mesh scale={[0.5, 0.5, 0.5]} position={[0, 0, 0]}>
-        <sphereGeometry />
-        <meshStandardMaterial />
-      </mesh>
-      <mesh scale={[0.5, 0.5, 0.5]} position={[1, 0, 0]}>
-        <sphereGeometry />
-        <meshStandardMaterial />
-      </mesh>
-    </>
-  );
+const Avatar = () => {
+  const model = useLoader(GLTFLoader, "./models/avatarmet.glb");
+  model.scene.traverse((object) => {
+    if (object.isObject3D) {
+      object.castShadow = true;
+    }
+  });
+  return <primitive object={model.scene} />;
 };
+
 export default function Page() {
   return (
     <div className="container">
-      <Canvas camera={{ fov: 75 }}>
+      <Canvas shadows>
         <Stats />
-        <ambientLight intensity={0.3} />
-        <directionalLight position={[0, 5, 5]} />
         <axesHelper position={[0, 0, 0]} args={[2]} />
         <gridHelper args={[10, 10]} />
         <OrbitControls />
-        <TexturedShapes />
+        {/* <TexturedShapes /> */}
+        <ArbolModel />
+        {/* <Avatar /> */}
+        <Lights />
+        <Ground />
       </Canvas>
     </div>
   );
